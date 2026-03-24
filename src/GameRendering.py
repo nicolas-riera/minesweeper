@@ -123,6 +123,7 @@ class GameRendering:
                 game.timer_running = True
                 update_timer(game)
 
+                cell.is_dug = False
                 if cell.surrounding_bombs == 0:
                     gui_dig_cells(row, col)
                 else:
@@ -137,7 +138,6 @@ class GameRendering:
             if cell.mine:
                 mine_clicked()
             elif not cell.is_dug:
-                cell.is_dug = True
                 if cell.surrounding_bombs == 0:
                     gui_dig_cells(row, col)
                 else:

@@ -31,7 +31,7 @@ class GridGen:
             for j in range(length):
                 if not self.grid[i][j].mine:
                     for s in surrounding:
-                        if length-1 >= i + s[0] >= 0 and length-1 > j + s[1] > 0:
+                        if length-1 >= i + s[0] >= 0 and length-1 >= j + s[1] >= 0:
                             if self.grid[i+s[0]][j+s[1]].mine:
                                 self.grid[i][j].surrounding_bombs += 1
         
@@ -48,6 +48,5 @@ class GridGen:
         cell.is_dug = True
 
         if cell.surrounding_bombs == 0:
-
             for sr, sc in surrounding:
                 self.reveal_empty_cells(row+sr, column+sc, length) #recursive as the function calls itself 
