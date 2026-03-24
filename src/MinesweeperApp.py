@@ -16,9 +16,14 @@ class MinesweeperApp(ctk.CTk):
 
         Menu.menu(self)
 
-    def clear_frame(self):
-        for widget in self.winfo_children():
+    def clear_container(self):
+        for widget in self.container.winfo_children():
             widget.destroy()
+
+    def start_game(self):
+        
+        self.clear_container()
+
         
     def exit(self):
         sys.exit()
