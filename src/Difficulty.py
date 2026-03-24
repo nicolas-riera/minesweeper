@@ -10,7 +10,7 @@ class Difficulty:
 
     @staticmethod
     def medium(root):
-        root.grid_leng = 14
+        root.grid_lengh = 14
         root.nb_mine = random.randint(38, 42)
         root.nb_flag = root.nb_mine
 
