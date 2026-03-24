@@ -51,14 +51,3 @@ class GridGen:
             
             for sr, sc in surrounding:
                 self.reveal_empty_cells(row+sr, column+sc, length) #recursive as the function calls itself 
-
-
-#print debug
-
-# game = GridGen()
-# game.mines_spawning()
-
-# print("Nombre de lignes :", len(game.grid))
-# print("Nombre de colonnes dans la première ligne :", len(game.grid[0]))
-# sum_bomb = sum(case.mine for row in game.grid for case in row)
-# print("Nombre de bombes :", sum_bomb)
