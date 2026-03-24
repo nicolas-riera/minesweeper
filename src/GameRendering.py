@@ -21,15 +21,17 @@ class GameRendering:
             game.ui_frame,
             text="Exit",
             command= game.exit_to_main_menu,
-            fg_color="transparent"
+            fg_color="transparent",
+            width=50
         )
-        exit_button.pack(side="left", padx=20)
+        exit_button.pack(side="left", padx=10)
 
         restart_button = ctk.CTkButton(
             game.ui_frame,
             text="Restart",
             command= game.restart,
-            fg_color="transparent"
+            fg_color="transparent",
+            width=50
         )
         restart_button.pack(side="left", padx=5)
 
