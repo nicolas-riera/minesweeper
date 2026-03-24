@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import sys
 
 from src.Menu import Menu
 
@@ -18,4 +19,6 @@ class MinesweeperApp(ctk.CTk):
     def clear_frame(self):
         for widget in self.winfo_children():
             widget.destroy()
-            
+        
+    def exit(self):
+        sys.exit()
