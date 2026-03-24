@@ -61,8 +61,7 @@ class GameRendering:
         def update_timer(game):
             if game.timer_running:
                 game.seconds += 1
-                time_string = f"⌛ {game.seconds:03d}"
-                game.timer_label.configure(text=f"{time_string}")
+                game.timer_label.configure(text=f"⌛ {game.seconds:03d}")
                 
                 game.root.after(1000, lambda: update_timer(game))
 

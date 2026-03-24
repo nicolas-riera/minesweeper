@@ -48,6 +48,6 @@ class GridGen:
         cell.is_dug = True
 
         if cell.surrounding_bombs == 0:
-            
+
             for sr, sc in surrounding:
                 self.reveal_empty_cells(row+sr, column+sc, length) #recursive as the function calls itself 
