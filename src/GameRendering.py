@@ -90,15 +90,28 @@ class GameRendering:
                             bomb_size = 20
                             
                         button.configure(text="💣", font=("Arial", bomb_size), fg_color= "#E40000")
+
+        def refresh_cells(game):
+            for r in range(game.root.grid_length):
+                for c in range(game.root.grid_length):
+                    cell = game.grid.grid[r][c]
+                    button = game.grid_buttons[r][c]
+                    if cell.is_dug:
+                        if cell.surrounding_bombs == 0:
+                            button.configure(fg_color="#4e4f50", state="disabled")
+                        else:
+                            button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
                        
 
         def gui_dig_cells(row, col):
             cell = game.grid.grid[row][col]
             button = game.grid_buttons[row][col]
 
-            button.configure(text="‎", fg_color="#4e4f50", state="disabled" )
+            button.configure(text="‎", fg_color="#4e4f50", state="disabled")
 
             game.reveal_empty_cells(row, col)
+
+            refresh_cells(game)
 
         def on_cell_click(row, col):
             cell = game.grid.grid[row][col]
@@ -115,7 +128,7 @@ class GameRendering:
                     gui_dig_cells(row, col)
                 else:
                     cell.is_dug = True
-                    button.configure(text=str(cell.surrounding_bombs))
+                    button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
                     
                 return
 
@@ -130,7 +143,7 @@ class GameRendering:
                     gui_dig_cells(row, col)
                 else:
                     cell.is_dug = True
-                    button.configure(text=str(cell.surrounding_bombs))
+                    button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
 
         def on_right_click(row, col):
             cell = game.grid.grid[row][col]

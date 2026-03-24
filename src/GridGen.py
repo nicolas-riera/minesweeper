@@ -36,8 +36,8 @@ class GridGen:
                                 self.grid[i][j].surrounding_bombs += 1
         
 
-    def reveal_empty_cells(self, row, column, legnth):
-        if row < 0 or row >= legnth or column < 0 or column >= legnth:
+    def reveal_empty_cells(self, row, column, length):
+        if row < 0 or row >= length or column < 0 or column >= length:
             return
         
         cell = self.grid[row][column]
@@ -50,7 +50,7 @@ class GridGen:
         if cell.surrounding_bombs == 0:
             
             for sr, sc in surrounding:
-                self.reveal_empty_cells(row+sr, column+sc, legnth) #recursive as the function calls itself 
+                self.reveal_empty_cells(row+sr, column+sc, length) #recursive as the function calls itself 
 
 
 #print debug
