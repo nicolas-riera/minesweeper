@@ -1,22 +1,22 @@
 import random
-from Case import Case
+from src.Cell import Cell
 
 class GridGen:
-    def __init__(self):
+    def __init__(self, lengh):
         self.grid = []
-        for r in range(8):
+        for r in range(lengh):
             new_rows=[]
-            for c in range(8):
-                new_rows.append(Case())
+            for c in range(lengh):
+                new_rows.append(Cell())
             self.grid.append(new_rows)
 
-    def mines_spawning(self):
-        mines_amount = 0 #up to three for testing purposes
-        while mines_amount < 3:
-            r_random = random.randint(0, 7)
-            c_random = random.randint(0, 7)
+    def mines_spawning(self, nb, lengh):
+        mines_amount = 0 
+        while mines_amount < nb:
+            r_random = random.randint(0, lengh-1)
+            c_random = random.randint(0, lengh-1)
 
-            if not self.grid[r_random][c_random].mine:
+            if not self.grid[r_random][c_random].mine and not self.grid[r_random][c_random].is_dug:
                 self.grid[r_random][c_random].mine = True
                 mines_amount +=1
 
@@ -25,10 +25,10 @@ class GridGen:
 
 #print debug
 
-game = GridGen()
-game.mines_spawning()
+# game = GridGen()
+# game.mines_spawning()
 
-print("Nombre de lignes :", len(game.grid))
-print("Nombre de colonnes dans la première ligne :", len(game.grid[0]))
-sum_bomb = sum(case.mine for row in game.grid for case in row)
-print("Nombre de bombes :", sum_bomb)
+# print("Nombre de lignes :", len(game.grid))
+# print("Nombre de colonnes dans la première ligne :", len(game.grid[0]))
+# sum_bomb = sum(case.mine for row in game.grid for case in row)
+# print("Nombre de bombes :", sum_bomb)

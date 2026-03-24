@@ -2,6 +2,7 @@ import customtkinter as ctk
 import sys
 
 from src.Menu import Menu
+from src.Game import Game
 
 class MinesweeperApp(ctk.CTk):
     def __init__(self):
@@ -23,6 +24,8 @@ class MinesweeperApp(ctk.CTk):
     def start_game(self):
         
         self.clear_container()
+
+        self.game = Game(self)
 
         
     def exit(self):
