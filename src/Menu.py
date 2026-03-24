@@ -25,6 +25,6 @@ class Menu:
             font=("Arial", 20),
             width=250,
             height=70,
-            command=lambda: quit()
+            command=quit
         )
         quit_button.pack()
