@@ -19,6 +19,12 @@ class Game:
         self.first_launch = False
         self.grid.mines_spawning(self.root.nb_mines, self.root.grid_length)
 
+    def calculate_surrounding_bombs(self):
+        self.grid.calculate_sourrounding_bombs(self.root.grid_length)
+
+    def reveal_empty_cells(self, row, col):
+        self.grid.reveal_empty_cells(row, col, self.root.grid_length)
+
     def restart(self):
         if 9 <= self.root.nb_mines <= 11:
             Difficulty.easy(self.root)
