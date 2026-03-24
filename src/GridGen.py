@@ -1,4 +1,6 @@
+import random
 from Case import Case
+
 class GridGen:
     def __init__(self):
         self.grid = []
