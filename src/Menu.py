@@ -2,12 +2,12 @@ import customtkinter as ctk
 
 class Menu:
     @staticmethod
-    def menu(frame):
+    def menu(root):
 
-        title = ctk.CTkLabel(frame, text="MINESWEEPER", font=("Arial", 65))
+        title = ctk.CTkLabel(root.container, text="MINESWEEPER", font=("Arial", 65))
         title.place(relx=0.5, rely=0.2, anchor='center')
 
-        button_frame = ctk.CTkFrame(frame, fg_color="transparent")
+        button_frame = ctk.CTkFrame(root.container, fg_color="transparent")
         button_frame.place(relx=0.5, rely=0.55, anchor="center")
 
         play_button = ctk.CTkButton(
@@ -25,6 +25,6 @@ class Menu:
             font=("Arial", 20),
             width=250,
             height=70,
-            command=quit
+            command=root.exit
         )
         quit_button.pack()
