@@ -11,7 +11,27 @@ class GameRendering:
         game.grid_frame = ctk.CTkFrame(game.root.container, fg_color="transparent")
         game.grid_frame.pack(side="top", fill="both", expand=True, padx=10, pady=5)
 
+        GameRendering.ui_rendering(game)
         GameRendering.grid_rendering(game)
+
+    @staticmethod
+    def ui_rendering(game):
+
+        game.timer_label = ctk.CTkLabel(
+        game.ui_frame, 
+        text="⌛ 000", 
+        font=("Arial", 20, "bold")
+        )
+        
+        game.timer_label.pack(side="right", padx=20)
+
+        game.flag_label = ctk.CTkLabel(
+        game.ui_frame, 
+        text=f"🚩 {game.root.nb_flags:03d}", 
+        font=("Arial", 20, "bold")
+        )
+        
+        game.flag_label.pack(side="right", padx=5)
 
     @staticmethod
     def grid_rendering(game):
@@ -20,11 +40,45 @@ class GameRendering:
 
         game.grid_buttons = [[None for _ in range(cols)] for _ in range(rows)]
 
+        def update_timer(game):
+            if game.timer_running:
+                game.seconds += 1
+                time_string = f"⌛ {game.seconds:03d}"
+                game.timer_label.configure(text=time_string)
+                
+                game.root.after(1000, lambda: update_timer(game))
+
+        def update_flag_counter(game, add=False, rem=False):
+            if add:
+                game.root.nb_flags +=1
+            if rem:
+                game.root.nb_flags -=1
+
+            game.flag_label.configure(text=f"🚩 {game.root.nb_flags:03d}")
+
+        def mine_clicked():
+            game.timer_running = False
+            for r in range(rows):
+                for c in range(cols):
+                    cell = game.grid.grid[r][c]
+                    button = game.grid_buttons[r][c]
+                    button.configure(state="disabled")
+                    if cell.mine:
+                        if 9 <= game.root.nb_mines <= 11:
+                            bomb_size = 45
+                        elif 38 <= game.root.nb_mines <= 42:
+                            bomb_size = 30
+                        else:
+                            bomb_size = 20
+                            
+                        button.configure(text="💣", font=("Arial", bomb_size), fg_color= "#E40000")
+                       
+
         def gui_dig_cells(row, col):
             cell = game.grid.grid[row][col]
             button = game.grid_buttons[row][col]
 
-            button.configure(text="‎", fg_color="#ffffff", hover="#ffffff")
+            button.configure(text="‎", fg_color="#4e4f50")
             # todo : algo creusage
 
         def on_cell_click(row, col):
@@ -34,6 +88,8 @@ class GameRendering:
             if game.first_launch:
                 cell.is_dug = True
                 game.spawn_mines()
+                game.timer_running = True
+                update_timer(game)
 
                 if cell.surrounding_bombs == 0:
                     gui_dig_cells(row, col)
@@ -47,7 +103,7 @@ class GameRendering:
                 return
 
             if cell.mine:
-                button.configure(text="💣")
+                mine_clicked()
                 print("BOOM ! Perdu.") # todo gui message
             elif not cell.is_dug:
                 cell.is_dug = True
@@ -69,16 +125,19 @@ class GameRendering:
                 cell.flag = False
                 cell.questionmark = True
                 button.configure(text="?")
+                update_flag_counter(game, add=True)
             elif not cell.is_dug:
                 cell.flag = True
                 button.configure(text="🚩")
+                update_flag_counter(game, rem=True)
         
         for r in range(rows):
             for c in range(cols):
                 btn = ctk.CTkButton(
                     game.grid_frame,
                     text="‎",
-                    command=lambda r=r, c=c: on_cell_click(r, c)
+                    command=lambda r=r, c=c: on_cell_click(r, c),
+                    fg_color="#757270"
                 )
                 btn.grid(row=r, column=c, padx=1, pady=1, sticky="nsew")
                 btn.bind("<Button-3>", lambda e, r=r, c=c: on_right_click(r, c))
