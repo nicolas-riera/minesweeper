@@ -97,7 +97,8 @@ class GameRendering:
             button = game.grid_buttons[row][col]
 
             button.configure(text="‎", fg_color="#4e4f50", state="disabled" )
-            # todo : algo creusage
+
+            game.reveal_empty_cells(row, col)
 
         def on_cell_click(row, col):
             cell = game.grid.grid[row][col]
@@ -106,6 +107,7 @@ class GameRendering:
             if game.first_launch and not cell.flag:
                 cell.is_dug = True
                 game.spawn_mines()
+                game.calculate_surrounding_bombs()
                 game.timer_running = True
                 update_timer(game)
 
