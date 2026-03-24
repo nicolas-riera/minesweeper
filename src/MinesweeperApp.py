@@ -7,3 +7,4 @@ class MinesweeperApp(ctk.CTk):
         self.title("Budget Buddy")
         self.geometry("800x800")
         ctk.set_appearance_mode("dark")
+        
