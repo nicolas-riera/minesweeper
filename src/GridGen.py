@@ -2,19 +2,19 @@ import random
 from src.Cell import Cell
 
 class GridGen:
-    def __init__(self, lengh):
+    def __init__(self, length):
         self.grid = []
-        for r in range(lengh):
+        for r in range(length):
             new_rows=[]
-            for c in range(lengh):
+            for c in range(length):
                 new_rows.append(Cell())
             self.grid.append(new_rows)
 
-    def mines_spawning(self, nb, lengh):
+    def mines_spawning(self, nb, length):
         mines_amount = 0 
         while mines_amount < nb:
-            r_random = random.randint(0, lengh-1)
-            c_random = random.randint(0, lengh-1)
+            r_random = random.randint(0, length-1)
+            c_random = random.randint(0, length-1)
 
             if not self.grid[r_random][c_random].mine and not self.grid[r_random][c_random].is_dug:
                 self.grid[r_random][c_random].mine = True

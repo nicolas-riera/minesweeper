@@ -17,6 +17,22 @@ class GameRendering:
     @staticmethod
     def ui_rendering(game):
 
+        exit_button = ctk.CTkButton(
+            game.ui_frame,
+            text="Exit",
+            command= game.exit_to_main_menu,
+            fg_color="transparent"
+        )
+        exit_button.pack(side="left", padx=20)
+
+        restart_button = ctk.CTkButton(
+            game.ui_frame,
+            text="Restart",
+            command= game.restart,
+            fg_color="transparent"
+        )
+        restart_button.pack(side="left", padx=5)
+
         game.timer_label = ctk.CTkLabel(
         game.ui_frame, 
         text="⌛ 000", 
@@ -36,7 +52,7 @@ class GameRendering:
     @staticmethod
     def grid_rendering(game):
         
-        rows = cols = game.root.grid_lengh
+        rows = cols = game.root.grid_length
 
         game.grid_buttons = [[None for _ in range(cols)] for _ in range(rows)]
 
@@ -44,7 +60,7 @@ class GameRendering:
             if game.timer_running:
                 game.seconds += 1
                 time_string = f"⌛ {game.seconds:03d}"
-                game.timer_label.configure(text=time_string)
+                game.timer_label.configure(text=f"{time_string}")
                 
                 game.root.after(1000, lambda: update_timer(game))
 
@@ -78,14 +94,14 @@ class GameRendering:
             cell = game.grid.grid[row][col]
             button = game.grid_buttons[row][col]
 
-            button.configure(text="‎", fg_color="#4e4f50")
+            button.configure(text="‎", fg_color="#4e4f50", state="disabled" )
             # todo : algo creusage
 
         def on_cell_click(row, col):
             cell = game.grid.grid[row][col]
             button = game.grid_buttons[row][col]
 
-            if game.first_launch:
+            if game.first_launch and not cell.flag:
                 cell.is_dug = True
                 game.spawn_mines()
                 game.timer_running = True
@@ -104,7 +120,6 @@ class GameRendering:
 
             if cell.mine:
                 mine_clicked()
-                print("BOOM ! Perdu.") # todo gui message
             elif not cell.is_dug:
                 cell.is_dug = True
                 if cell.surrounding_bombs == 0:
@@ -127,9 +142,13 @@ class GameRendering:
                 button.configure(text="?")
                 update_flag_counter(game, add=True)
             elif not cell.is_dug:
-                cell.flag = True
-                button.configure(text="🚩")
-                update_flag_counter(game, rem=True)
+                if game.root.nb_flags > 0:
+                    cell.flag = True
+                    button.configure(text="🚩")
+                    update_flag_counter(game, rem=True)
+                else:
+                    cell.questionmark = True
+                    button.configure(text="?")
         
         for r in range(rows):
             for c in range(cols):

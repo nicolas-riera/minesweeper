@@ -15,7 +15,7 @@ class MinesweeperApp(ctk.CTk):
         self.container = ctk.CTkFrame(master=self)
         self.container.pack(fill="both", expand=True)
 
-        Menu.menu(self)
+        self.page_switcher("menu")
 
     def clear_container(self):
         for widget in self.container.winfo_children():
@@ -27,6 +27,17 @@ class MinesweeperApp(ctk.CTk):
 
         self.game = Game(self)
 
+    def page_switcher(self, page):
+
+        self.clear_container()
+
+        match page:
+            case "game":
+                self.start_game()
+            case "menu":
+                Menu.menu(self)
+            case _:
+                self.exit()
         
     def exit(self):
         sys.exit()
