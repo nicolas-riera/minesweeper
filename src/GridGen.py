@@ -16,18 +16,16 @@ class GridGen:
                 new_rows.append(Cell()) #add to each cell an object cell
             self.grid.append(new_rows)
 
-    def mines_spawning(self, nb, length, row, col):
-
+    def mines_spawning(self, nb, length, row=None, col=None):
+        
         mines_amount = 0 
         while mines_amount < nb: 
             r_random = random.randint(0, length-1) 
             c_random = random.randint(0, length-1)
 
-            if (
-                not self.grid[r_random][c_random].mine and not self.grid[r_random][c_random].is_dug and
-                self.grid[r_random][c_random]
-                not in [self.grid[row+s[0]][col+s[1]] for s in surrounding]
-            ): #as long as the cell isn't dug nor a mine and as long as the amount of mine required wasn't planted keep planting on random cells
+            no_bomb_around= (row is not None and col is not None) and ((r_random - row) <= 1 and (c_random - col) <= 1)
+
+            if not self.grid[r_random][c_random].mine and not self.grid[r_random][c_random].is_dug and not no_bomb_around: #as long as the cell isn't dug nor a mine and as long as the amount of mine required wasn't planted keep planting on random cells
                 self.grid[r_random][c_random].mine = True
                 mines_amount +=1
     
