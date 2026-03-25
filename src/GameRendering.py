@@ -115,7 +115,7 @@ class GameRendering:
                 for c in range(game.root.grid_length):
                     cell = game.grid.grid[r][c]
                     button = game.grid_buttons[r][c]
-                    if cell.is_dug:
+                    if cell.is_dug and button.cget("state") != "disabled": #and button.cget("state") != "disabled"
                         if cell.surrounding_bombs == 0:
                             button.configure(fg_color="#4e4f50", state="disabled")
                         else:
@@ -210,15 +210,15 @@ class GameRendering:
         for j in range(cols):
             game.grid_frame.grid_columnconfigure(j, weight=1)
 
-        def adjust_buttons(event):
-            frame_width = event.width
-            frame_height = event.height
+        # def adjust_buttons(event):
+        #     frame_width = event.width
+        #     frame_height = event.height
 
-            cell_size = min((frame_width - 2*cols) // cols, (frame_height - 2*rows) // rows)
+        #     cell_size = min((frame_width - 2*cols) // cols, (frame_height - 2*rows) // rows)
 
-            for r in range(rows):
-                for c in range(cols):
-                    btn = game.grid_buttons[r][c]
-                    btn.configure(width=cell_size, height=cell_size)
+        #     for r in range(rows):
+        #         for c in range(cols):
+        #             btn = game.grid_buttons[r][c]
+        #             btn.configure(width=cell_size, height=cell_size)
 
-        game.grid_frame.bind("<Configure>", adjust_buttons)
+        # game.grid_frame.bind("<Configure>", adjust_buttons)

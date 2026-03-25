@@ -23,7 +23,7 @@ class GridGen:
             r_random = random.randint(0, length-1) 
             c_random = random.randint(0, length-1)
 
-            no_bomb_around= (row is not None and col is not None) and (abs(r_random - row) <= 1 and abs(c_random - col) <= 1)
+            no_bomb_around= (row is not None and col is not None) and (abs(r_random - row) <= 1 and abs(c_random - col) <= 1) #chech if two cells are touching each other
 
             if not self.grid[r_random][c_random].mine and not self.grid[r_random][c_random].is_dug and not no_bomb_around: #as long as the cell isn't dug nor a mine and as long as the amount of mine required wasn't planted keep planting on random cells
                 self.grid[r_random][c_random].mine = True
