@@ -6,8 +6,6 @@ Inspired by the original logic puzzle game. ([Wikipedia](https://en.wikipedia.or
 This project recreates the **Minesweeper** experience: a grid of hidden cells, some containing mines.  
 The goal is to reveal all safe cells without triggering any mines, using the numerical hints revealed after each click.
 
----
-
 ## Features
 
 - Randomly generated grid  
