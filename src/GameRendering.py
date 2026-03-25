@@ -138,7 +138,7 @@ class GameRendering:
 
             if game.first_launch and not cell.flag:
                 cell.is_dug = True
-                game.spawn_mines()
+                game.spawn_mines(row, col)
                 game.calculate_surrounding_bombs()
                 game.timer_running = True
                 update_timer(game)

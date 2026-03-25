@@ -15,9 +15,9 @@ class Game:
 
         GameRendering.game_rendering(self)
 
-    def spawn_mines(self):
+    def spawn_mines(self, row, col):
         self.first_launch = False
-        self.grid.mines_spawning(self.root.nb_mines, self.root.grid_length)
+        self.grid.mines_spawning(self.root.nb_mines, self.root.grid_length, row, col)
 
     def calculate_surrounding_bombs(self):
         self.grid.calculate_sourrounding_bombs(self.root.grid_length)
