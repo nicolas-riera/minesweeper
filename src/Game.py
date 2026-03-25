@@ -1,8 +1,9 @@
-import customtkinter as ctk
+import datetime
 
 from src.GridGen import GridGen
 from src.GameRendering import GameRendering
 from src.Difficulty import Difficulty
+from src.JsonManager import JsonManager
 
 class Game:
     def __init__(self, root):
@@ -31,6 +32,10 @@ class Game:
                 if not self.grid.grid[r][c].is_dug and not self.grid.grid[r][c].mine:
                     return False
         return True
+    
+    def save_score(self):
+        score = {"datetime" : str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), "difficulty" : self.root.difficulty, "timer" : str(self.seconds)}
+        JsonManager.write_score(score)
 
     def restart(self):
         if 9 <= self.root.nb_mines <= 11:

@@ -12,12 +12,17 @@ The goal is to reveal all safe cells without triggering any mines, using the num
 - Graphical interface using *CustomTkinter*  
 - Multiple difficulties
 - Cross-platform: Windows, macOS & Linux (Python required)
+- Score system
 
 ## Installation (Windows only)
 
 Download the latest release from the releases and extract the .zip file.
 
 Then, launch ```Minesweeper.exe```.
+
+## Controls
+
+todo
 
 ## Run and Build from source
 
