@@ -26,15 +26,11 @@ class Game:
         self.grid.reveal_empty_cells(row, col, self.root.grid_length)
 
     def check_victory(self):
-        nb_cases = self.root.grid_length ** 2 - self.root.nb_mines
         for r in range(self.root.grid_length):
             for c in range(self.root.grid_length):
-                if self.grid.grid[r][c].is_dug and not self.grid.grid[r][c].mine:
-                    nb_cases -= 1
-        if nb_cases == 0:
-            return True
-        else:
-            return False
+                if not self.grid.grid[r][c].is_dug and not self.grid.grid[r][c].mine:
+                    return False
+        return True
 
     def restart(self):
         if 9 <= self.root.nb_mines <= 11:
