@@ -56,13 +56,13 @@ class GameRendering:
 
         if 9 <= game.root.nb_mines <= 11:
             number_size = 35
-            bomb_size = 45
+            icon_size = 45
         elif 38 <= game.root.nb_mines <= 42:
             number_size = 20
-            bomb_size = 30
+            icon_size = 30
         else:
             number_size = 18
-            bomb_size = 20
+            icon_size = 20
         
         rows = cols = game.root.grid_length
 
@@ -107,7 +107,7 @@ class GameRendering:
                     button = game.grid_buttons[r][c]
                     button.configure(state="disabled")
                     if cell.mine:                            
-                        button.configure(text="💣", font=("Arial", bomb_size), fg_color= "#E40000")
+                        button.configure(text="💣", font=("Arial", icon_size), fg_color= "#E40000")
             blink_exit_restart_buttons(game)
 
         def refresh_cells(game):
@@ -182,12 +182,12 @@ class GameRendering:
             elif cell.flag:
                 cell.flag = False
                 cell.questionmark = True
-                button.configure(text="?")
+                button.configure(text="?", font=("Arial", icon_size))
                 update_flag_counter(game, add=True)
             elif not cell.is_dug:
                 if game.root.nb_flags > 0:
                     cell.flag = True
-                    button.configure(text="🚩")
+                    button.configure(text="🚩", font=("Arial", icon_size))
                     update_flag_counter(game, rem=True)
                 else:
                     cell.questionmark = True
