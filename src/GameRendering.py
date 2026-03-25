@@ -17,23 +17,23 @@ class GameRendering:
     @staticmethod
     def ui_rendering(game):
 
-        exit_button = ctk.CTkButton(
+        game.exit_button = ctk.CTkButton(
             game.ui_frame,
             text="Exit",
             command= game.exit_to_main_menu,
             fg_color="transparent",
             width=50
         )
-        exit_button.pack(side="left", padx=10)
+        game.exit_button.pack(side="left", padx=10)
 
-        restart_button = ctk.CTkButton(
+        game.restart_button = ctk.CTkButton(
             game.ui_frame,
             text="Restart",
             command= game.restart,
             fg_color="transparent",
             width=50
         )
-        restart_button.pack(side="left", padx=5)
+        game.restart_button.pack(side="left", padx=5)
 
         game.timer_label = ctk.CTkLabel(
         game.ui_frame, 
@@ -53,13 +53,39 @@ class GameRendering:
 
     @staticmethod
     def grid_rendering(game):
+
+        if 9 <= game.root.nb_mines <= 11:
+            number_size = 35
+            icon_size = 45
+        elif 38 <= game.root.nb_mines <= 42:
+            number_size = 20
+            icon_size = 30
+        else:
+            number_size = 18
+            icon_size = 20
         
         rows = cols = game.root.grid_length
 
         game.grid_buttons = [[None for _ in range(cols)] for _ in range(rows)]
 
+        def blink_exit_restart_buttons(game):
+
+            if not game.exit_button.winfo_exists() or not game.restart_button.winfo_exists():
+                return
+
+            game.blink_state = not getattr(game, "blink_state", False)
+
+            color = "#1f6aa5" if game.blink_state else "transparent"
+
+            game.exit_button.configure(fg_color=color)
+            game.restart_button.configure(fg_color=color)
+
+            game.root.after(500, lambda: blink_exit_restart_buttons(game))
+
         def update_timer(game):
-            if game.timer_running:
+            if not game.timer_label.winfo_exists():
+                return
+            elif game.timer_running:
                 game.seconds += 1
                 game.timer_label.configure(text=f"⌛ {game.seconds:03d}")
                 
@@ -80,15 +106,9 @@ class GameRendering:
                     cell = game.grid.grid[r][c]
                     button = game.grid_buttons[r][c]
                     button.configure(state="disabled")
-                    if cell.mine:
-                        if 9 <= game.root.nb_mines <= 11:
-                            bomb_size = 45
-                        elif 38 <= game.root.nb_mines <= 42:
-                            bomb_size = 30
-                        else:
-                            bomb_size = 20
-                            
-                        button.configure(text="💣", font=("Arial", bomb_size), fg_color= "#E40000")
+                    if cell.mine:                            
+                        button.configure(text="💣", font=("Arial", icon_size), fg_color= "#E40000")
+            blink_exit_restart_buttons(game)
 
         def refresh_cells(game):
             for r in range(game.root.grid_length):
@@ -99,7 +119,7 @@ class GameRendering:
                         if cell.surrounding_bombs == 0:
                             button.configure(fg_color="#4e4f50", state="disabled")
                         else:
-                            button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
+                            button.configure(text=str(cell.surrounding_bombs), font=("Arial", number_size), fg_color="#4e4f50", state="disabled")
                        
 
         def gui_dig_cells(row, col):
@@ -118,7 +138,7 @@ class GameRendering:
 
             if game.first_launch and not cell.flag:
                 cell.is_dug = True
-                game.spawn_mines()
+                game.spawn_mines(row, col)
                 game.calculate_surrounding_bombs()
                 game.timer_running = True
                 update_timer(game)
@@ -128,7 +148,7 @@ class GameRendering:
                     gui_dig_cells(row, col)
                 else:
                     cell.is_dug = True
-                    button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
+                    button.configure(text=str(cell.surrounding_bombs), font=("Arial", number_size), fg_color="#4e4f50", state="disabled")
                     
                 return
 
@@ -142,7 +162,14 @@ class GameRendering:
                     gui_dig_cells(row, col)
                 else:
                     cell.is_dug = True
-                    button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
+                    button.configure(text=str(cell.surrounding_bombs), font=("Arial", number_size), fg_color="#4e4f50", state="disabled")
+                if game.check_victory():
+                    game.timer_running = False
+                    for r in range(game.root.grid_length):
+                        for c in range(game.root.grid_length):
+                            game.grid_buttons[r][c].configure(state="disabled")
+                    blink_exit_restart_buttons(game)
+                            
 
         def on_right_click(row, col):
             cell = game.grid.grid[row][col]
@@ -155,12 +182,12 @@ class GameRendering:
             elif cell.flag:
                 cell.flag = False
                 cell.questionmark = True
-                button.configure(text="?")
+                button.configure(text="?", font=("Arial", icon_size))
                 update_flag_counter(game, add=True)
             elif not cell.is_dug:
                 if game.root.nb_flags > 0:
                     cell.flag = True
-                    button.configure(text="🚩")
+                    button.configure(text="🚩", font=("Arial", icon_size))
                     update_flag_counter(game, rem=True)
                 else:
                     cell.questionmark = True

@@ -15,15 +15,22 @@ class Game:
 
         GameRendering.game_rendering(self)
 
-    def spawn_mines(self):
+    def spawn_mines(self, row, col):
         self.first_launch = False
-        self.grid.mines_spawning(self.root.nb_mines, self.root.grid_length)
+        self.grid.mines_spawning(self.root.nb_mines, self.root.grid_length, row, col)
 
     def calculate_surrounding_bombs(self):
         self.grid.calculate_sourrounding_bombs(self.root.grid_length)
 
     def reveal_empty_cells(self, row, col):
         self.grid.reveal_empty_cells(row, col, self.root.grid_length)
+
+    def check_victory(self):
+        for r in range(self.root.grid_length):
+            for c in range(self.root.grid_length):
+                if not self.grid.grid[r][c].is_dug and not self.grid.grid[r][c].mine:
+                    return False
+        return True
 
     def restart(self):
         if 9 <= self.root.nb_mines <= 11:

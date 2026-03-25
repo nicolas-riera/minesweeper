@@ -1,5 +1,24 @@
 # Minesweeper
 
+A classic **Minesweeper** game implemented in Python with a graphical interface.  
+Inspired by the original logic puzzle game. ([Wikipedia](https://en.wikipedia.org/wiki/Minesweeper_(video_game)))
+
+This project recreates the **Minesweeper** experience: a grid of hidden cells, some containing mines.  
+The goal is to reveal all safe cells without triggering any mines, using the numerical hints revealed after each click.
+
+## Features
+
+- Randomly generated grid  
+- Graphical interface using *CustomTkinter*  
+- Multiple difficulties
+- Cross-platform: Windows, macOS & Linux (Python required)
+
+## Installation (Windows only)
+
+Download the latest release from the releases and extract the .zip file.
+
+Then, launch ```Minesweeper.exe```.
+
 ## Run and Build from source
 
 ### Requirements
