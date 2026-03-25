@@ -54,16 +54,20 @@ class GameRendering:
     @staticmethod
     def grid_rendering(game):
 
-        if 9 <= game.root.nb_mines <= 11:
-            number_size = 35
-            icon_size = 45
-        elif 38 <= game.root.nb_mines <= 42:
-            number_size = 20
-            icon_size = 30
-        else:
-            number_size = 18
-            icon_size = 20
-        
+        match game.root.difficulty:
+            case "easy":
+                number_size = 35
+                icon_size = 45
+            case "medium":
+                number_size = 20
+                icon_size = 30
+            case "hard":
+                number_size = 18
+                icon_size = 20
+            case _:
+                number_size = 18
+                icon_size = 20
+            
         rows = cols = game.root.grid_length
 
         game.grid_buttons = [[None for _ in range(cols)] for _ in range(rows)]
@@ -168,6 +172,7 @@ class GameRendering:
                     for r in range(game.root.grid_length):
                         for c in range(game.root.grid_length):
                             game.grid_buttons[r][c].configure(state="disabled")
+                    game.save_score()
                     blink_exit_restart_buttons(game)
                             
 
