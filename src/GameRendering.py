@@ -59,7 +59,9 @@ class GameRendering:
         game.grid_buttons = [[None for _ in range(cols)] for _ in range(rows)]
 
         def update_timer(game):
-            if game.timer_running:
+            if not game.timer_label.winfo_exists():
+                return
+            elif game.timer_running:
                 game.seconds += 1
                 game.timer_label.configure(text=f"⌛ {game.seconds:03d}")
                 
