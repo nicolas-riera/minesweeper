@@ -53,6 +53,16 @@ class GameRendering:
 
     @staticmethod
     def grid_rendering(game):
+
+        if 9 <= game.root.nb_mines <= 11:
+            number_size = 35
+            bomb_size = 45
+        elif 38 <= game.root.nb_mines <= 42:
+            number_size = 20
+            bomb_size = 30
+        else:
+            number_size = 18
+            bomb_size = 20
         
         rows = cols = game.root.grid_length
 
@@ -96,14 +106,7 @@ class GameRendering:
                     cell = game.grid.grid[r][c]
                     button = game.grid_buttons[r][c]
                     button.configure(state="disabled")
-                    if cell.mine:
-                        if 9 <= game.root.nb_mines <= 11:
-                            bomb_size = 45
-                        elif 38 <= game.root.nb_mines <= 42:
-                            bomb_size = 30
-                        else:
-                            bomb_size = 20
-                            
+                    if cell.mine:                            
                         button.configure(text="💣", font=("Arial", bomb_size), fg_color= "#E40000")
             blink_exit_restart_buttons(game)
 
@@ -116,7 +119,7 @@ class GameRendering:
                         if cell.surrounding_bombs == 0:
                             button.configure(fg_color="#4e4f50", state="disabled")
                         else:
-                            button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
+                            button.configure(text=str(cell.surrounding_bombs), font=("Arial", number_size), fg_color="#4e4f50", state="disabled")
                        
 
         def gui_dig_cells(row, col):
@@ -145,7 +148,7 @@ class GameRendering:
                     gui_dig_cells(row, col)
                 else:
                     cell.is_dug = True
-                    button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
+                    button.configure(text=str(cell.surrounding_bombs), font=("Arial", number_size), fg_color="#4e4f50", state="disabled")
                     
                 return
 
@@ -159,7 +162,7 @@ class GameRendering:
                     gui_dig_cells(row, col)
                 else:
                     cell.is_dug = True
-                    button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
+                    button.configure(text=str(cell.surrounding_bombs), font=("Arial", number_size), fg_color="#4e4f50", state="disabled")
                 if game.check_victory():
                     game.timer_running = False
                     for r in range(game.root.grid_length):
