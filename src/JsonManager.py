@@ -37,4 +37,4 @@ class JsonManager:
     @staticmethod
     def clear_scores():
         with open(path, "w", encoding="utf-8") as f:
-            json.dump({}, f)
+            json.dump([], f)
