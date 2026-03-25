@@ -24,9 +24,9 @@ class GridGen:
             c_random = random.randint(0, length-1)
 
             if (
-                not self.grid[r_random][c_random].mine and not self.grid[r_random][c_random].is_dug and
-                self.grid[r_random][c_random]
-                not in [self.grid[row+s[0]][col+s[1]] for s in surrounding]
+                not self.grid[r_random][c_random].mine and
+                not self.grid[r_random][c_random].is_dug and
+                self.grid[r_random][c_random] not in [self.grid[row+s[0]][col+s[1]] for s in surrounding]
             ): #as long as the cell isn't dug nor a mine and as long as the amount of mine required wasn't planted keep planting on random cells
                 self.grid[r_random][c_random].mine = True
                 mines_amount +=1
