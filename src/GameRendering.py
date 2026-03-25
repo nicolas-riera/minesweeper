@@ -145,6 +145,12 @@ class GameRendering:
                 else:
                     cell.is_dug = True
                     button.configure(text=str(cell.surrounding_bombs), fg_color="#4e4f50", state="disabled")
+                if game.check_victory():
+                    game.timer_running = False
+                    for r in range(game.root.grid_length):
+                        for c in range(game.root.grid_length):
+                            game.grid_buttons[r][c].configure(state="disabled")
+                            
 
         def on_right_click(row, col):
             cell = game.grid.grid[row][col]
