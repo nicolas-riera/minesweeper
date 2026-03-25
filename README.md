@@ -22,7 +22,13 @@ Then, launch ```Minesweeper.exe```.
 
 ## Controls
 
-todo
+- Left mouse click:
+    - Press on buttons
+    - Dig a cell
+- Right mouse click:
+    - Place a flag
+    - A second right click will place a question mark
+    - A third one will reset the cell back to empty
 
 ## Run and Build from source
 
