@@ -16,7 +16,7 @@ The goal is to reveal all safe cells without triggering any mines, using the num
 
 ## Installation (Windows only)
 
-Download the latest release from the releases and extract the .zip file.
+Download the latest release from the [releases](https://github.com/nicolas-riera/minesweeper/releases/latest) and extract the .zip file.
 
 Then, launch ```Minesweeper.exe```.
 
@@ -52,4 +52,6 @@ Then, copy the location and paste it in this pyinstaller command :
 ```bash
 pyinstaller --onedir main.py --add-data "{path_to_customtkinter}/customtkinter;customtkinter/" --noconsole --name Minesweeper
 ```
+## Authors
 
+This project has been realised by [Nicolas](https://github.com/nicolas-riera), [Hugo](https://github.com/hugo-belaloui) and [Yaniss](https://github.com/yanissaouri)
