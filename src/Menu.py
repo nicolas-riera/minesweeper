@@ -117,7 +117,7 @@ class Menu:
 
         ctk.CTkLabel(legend_frame, text="Rang", width=30, font=("Arial", 16, "bold")).grid(row=0, column=0, padx=5, sticky="w")
         ctk.CTkLabel(legend_frame, text="Difficulty", width=150, font=("Arial", 16, "bold")).grid(row=0, column=1, padx=5, sticky="w")
-        ctk.CTkLabel(legend_frame, text="Score", width=100, font=("Arial", 16, "bold")).grid(row=0, column=2, padx=5, sticky="w")
+        ctk.CTkLabel(legend_frame, text="Timer", width=100, font=("Arial", 16, "bold")).grid(row=0, column=2, padx=5, sticky="w")
         ctk.CTkLabel(legend_frame, text="Date", width=150, font=("Arial", 16, "bold")).grid(row=0, column=3, padx=5, sticky="w")
 
         for i, score in enumerate(scores, start=1):
