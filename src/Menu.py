@@ -102,6 +102,13 @@ class Menu:
 
         scores = JsonManager.read_scores()
 
+        difficulty_order = {"hard": 0, "medium": 1, "easy": 2}
+
+        scores = sorted(
+            scores,
+            key=lambda s: (difficulty_order.get(s["difficulty"], 3), s["timer"])
+        )
+
         scroll_frame = ctk.CTkScrollableFrame(root.container, width=600, height=400)
         scroll_frame.place(relx=0.5, rely=0.55, anchor="center")
 
