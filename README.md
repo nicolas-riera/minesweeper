@@ -1,5 +1,8 @@
 # Minesweeper
 
+![pythonversion](https://img.shields.io/badge/python-3.10+-blue)
+![ctk](https://img.shields.io/badge/customtkinter-required-yellow)
+
 A classic **Minesweeper** game implemented in Python with a graphical interface.  
 Inspired by the original logic puzzle game. ([Wikipedia](https://en.wikipedia.org/wiki/Minesweeper_(video_game)))
 
